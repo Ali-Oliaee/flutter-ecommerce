@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   dio: ^5.7.0
+  jumping_dot: ^0.0.7
   flutter:
     sdk: flutter
 

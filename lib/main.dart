@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'Model/PageViewModel.dart';
 
 void main() {
@@ -55,27 +56,63 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       drawer: const Drawer(),
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              height: 300,
-              color: Colors.amber,
-              child: FutureBuilder<List<PageViewModel>>(
-                  future: products,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        color: Colors.green,
-                      );
-                    }
-                    return Container(
-                      color: Colors.blue,
+      body: Column(
+        children: [
+          Container(
+            height: 420,
+            child: FutureBuilder<List<PageViewModel>>(
+                future: products,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<PageViewModel>? items = snapshot.data;
+                    return Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        PageView.builder(
+                            itemCount: items!.length,
+                            itemBuilder: (context, position) {
+                              return productItem(items[position]);
+                            })
+                      ],
                     );
-                  }),
-            )
-          ],
-        ),
+                  }
+                  return JumpingDots(
+                    color: Colors.black,
+                    animationDuration: const Duration(milliseconds: 200),
+                  );
+                }),
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding productItem(PageViewModel item) {
+    return Padding(
+      padding: const EdgeInsets.all(30),
+      child: Column(
+        children: [
+          Image.network(
+            item.image,
+            width: 120,
+          ),
+          Text(
+            item.title,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            item.description,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            item.price.toString(),
+            style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 16, 120, 120)),
+          )
+        ],
       ),
     );
   }
