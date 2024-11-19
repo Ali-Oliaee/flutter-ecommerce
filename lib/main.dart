@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jumping_dot/jumping_dot.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Model/PageViewModel.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<PageViewModel>> products;
+  PageController sliderController = PageController();
 
   Future<List<PageViewModel>> fetchProducts() async {
     List<PageViewModel> items = [];
@@ -69,10 +71,28 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.bottomCenter,
                       children: [
                         PageView.builder(
+                            controller: sliderController,
                             itemCount: items!.length,
                             itemBuilder: (context, position) {
                               return productItem(items[position]);
-                            })
+                            }),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: SmoothPageIndicator(
+                            controller: sliderController,
+                            count: items.length,
+                            effect: const ExpandingDotsEffect(
+                                dotHeight: 20,
+                                dotWidth: 20,
+                                dotColor: Colors.grey,
+                                activeDotColor: Colors.redAccent),
+                            onDotClicked: (index) => {
+                              sliderController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 240),
+                                  curve: Curves.easeInOut)
+                            },
+                          ),
+                        )
                       ],
                     );
                   }

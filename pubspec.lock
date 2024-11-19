@@ -171,11 +171,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  progress_indicators:
+    dependency: "direct main"
+    description:
+      name: progress_indicators
+      sha256: "28cba16c2c1f37b14f3551c406e0d9b156fb2f3205d7b4e4153823b3abc9d56c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      sha256: af874c4939558391f48599d9ed04f43ac5ec12d03973ce0fa262236c41e1a02b
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0-nullsafety.0"
   source_span:
     dependency: transitive
     description:

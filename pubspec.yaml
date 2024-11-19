@@ -30,6 +30,8 @@ environment:
 dependencies:
   dio: ^5.7.0
   jumping_dot: ^0.0.7
+  progress_indicators: ^1.0.0
+  smooth_page_indicator: ^0.3.0-nullsafety.0
   flutter:
     sdk: flutter
 
