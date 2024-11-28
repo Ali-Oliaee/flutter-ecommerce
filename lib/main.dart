@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce/Widgets/BannerSlider.dart';
 import 'package:jumping_dot/jumping_dot.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Model/PageViewModel.dart';
 
 void main() {
@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<PageViewModel>> products;
-  PageController sliderController = PageController();
 
   Future<List<PageViewModel>> fetchProducts() async {
     List<PageViewModel> items = [];
@@ -67,70 +66,13 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<PageViewModel>? items = snapshot.data;
-                    return Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        PageView.builder(
-                            controller: sliderController,
-                            itemCount: items!.length,
-                            itemBuilder: (context, position) {
-                              return productItem(items[position]);
-                            }),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: SmoothPageIndicator(
-                            controller: sliderController,
-                            count: items.length,
-                            effect: const ExpandingDotsEffect(
-                                dotHeight: 20,
-                                dotWidth: 20,
-                                dotColor: Colors.grey,
-                                activeDotColor: Colors.redAccent),
-                            onDotClicked: (index) => {
-                              sliderController.animateToPage(index,
-                                  duration: const Duration(milliseconds: 240),
-                                  curve: Curves.easeInOut)
-                            },
-                          ),
-                        )
-                      ],
-                    );
+                    return const BannerSlider();
                   }
                   return JumpingDots(
                     color: Colors.black,
                     animationDuration: const Duration(milliseconds: 200),
                   );
                 }),
-          )
-        ],
-      ),
-    );
-  }
-
-  Padding productItem(PageViewModel item) {
-    return Padding(
-      padding: const EdgeInsets.all(30),
-      child: Column(
-        children: [
-          Image.network(
-            item.image,
-            width: 120,
-          ),
-          Text(
-            item.title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            item.description,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            item.price.toString(),
-            style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 16, 120, 120)),
           )
         ],
       ),
